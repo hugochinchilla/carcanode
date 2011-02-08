@@ -41,6 +41,7 @@ var game = {
     players: ['Player 1', 'Player 2'],
     pile: [],
     current_tile: null,
+    tile_on_board: true,
     
     start: function() {
         game.createTiles();
@@ -66,15 +67,21 @@ var game = {
     
     setEvents: function() {
         $$('#board .square').addEvent('click', function(ev){
-            ev.target.addClass(game.current_tile.repr);
-            game.playNextTurn();
+            if (game.tile_on_board || ev.target.hasClass('tile')) {
+                return;
+            }
+            
+            ev.target.addClass('tile').addClass(game.current_tile.repr);
+            game.tile_on_board = true;
+            game.enableButtons();
         });
     },
     
     playNextTurn: function() {
         game.current_tile = game.pile.pop();
         var tile_element = game.tileToElement(game.current_tile);
-        $("in-play-tile").grab(tile_element);
+        $("in-play-tile").empty().grab(tile_element);
+        game.tile_on_board = false;
     },
     
     tileToElement: function(tile) {
@@ -93,8 +100,8 @@ var game = {
         }
         
         new Drag($('board'), {
-            stopPropagation: false,
-            preventDefault: false
+            stopPropagation: true,
+            preventDefault: true
         });
     },
     
@@ -107,6 +114,17 @@ var game = {
         element.style['left'] = (x-1)*85 + 'px';
         element.style['top'] = (y-1)*85 + 'px';
         return element;
+    },
+    
+    enableButtons: function() {
+        $$('.buttons .disabled').removeClass('disabled');
+        $$('.buttons .commit').addEvent('click', game.onCommit);
+    },
+    
+    onCommit: function() {
+        $$('.buttons .commit').removeEvents('click');
+        $$('.buttons').getChildren().each(function(e){e.addClass('disabled')});
+        game.playNextTurn();
     }
 }
 

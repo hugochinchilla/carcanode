@@ -16,10 +16,9 @@ body {
 .viewport {
     background-color: #360c37;
     height: 100%;
-    overflow: visible;
+    overflow: hidden;
     position: relative;
     width: 100%;
-    margin: 0 0 0 -180px;
 }
 .sidebar {
     position: absolute;
@@ -50,7 +49,7 @@ body {
     width: 5100px;
     height: 3400px;
     position: relative;
-    top: -50%;
+    top: -25%;
     left: -25%;
     background: url(img/background-bg-fill.png) repeat;
 }
@@ -78,14 +77,6 @@ body {
     text-align: center;
     text-transform: uppercase;
     z-index: 100;
-}
-
-.board .tile {
-    height: 44px;
-    width: 44px;
-    padding-left: 4px;
-    padding-top: 4px;
-    background-position: 3px 3px;
 }
 
 .board .tile .letter {

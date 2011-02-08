@@ -51,36 +51,51 @@ var game = {
     
     createTiles: function(){
         tile_types.each(function(e){
-            var amount = e[0], definition = e[1];
+            var amount = e[0];
+            var definition = e[1];
             for (i=0; i<amount; i++) {
                 game.pile.push(game.tileFromDefinition(definition));
             }
         })
+        game.pile.shuffle();
     },
     
     tileFromDefinition: function(def) {
-        return Object.merge(tile_skel, def);
+        return Object.clone(Object.merge(tile_skel, def));
     },
     
-    setEvents: function() {},
+    setEvents: function() {
+        $$('#board .square').addEvent('click', function(ev){
+            ev.target.addClass(game.current_tile.repr);
+            game.playNextTurn();
+        });
+    },
     
     playNextTurn: function() {
-        game.current_tile = game.pile.getRandom();
+        game.current_tile = game.pile.pop();
+        var tile_element = game.tileToElement(game.current_tile);
+        $("in-play-tile").grab(tile_element);
     },
     
-    tileToElement: function() {
-        
+    tileToElement: function(tile) {
+        var element = new Element('div', {'class':'square'});
+        element.addClass(tile.repr);
+        return element;
     },
     
     buildBoard: function() {
         var board = $('board');
+
         for (i=0; i<60; i++) {
             for (j=0; j<40; j++) {
                 board.grab(game.createBoardSquare(i,j));
             }
         }
         
-        new Drag($('board'), {snap: 0});
+        new Drag($('board'), {
+            stopPropagation: false,
+            preventDefault: false
+        });
     },
     
     createBoardSquare: function(x,y) {
@@ -89,8 +104,8 @@ var game = {
             'data-coord': coord_string,
             'class': 'square'
         });
-        element.style['left'] = (x-1)*50 + 'px';
-        element.style['top'] = (y-1)*50 + 'px';
+        element.style['left'] = (x-1)*85 + 'px';
+        element.style['top'] = (y-1)*85 + 'px';
         return element;
     }
 }

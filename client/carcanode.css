@@ -16,9 +16,10 @@ body {
 .viewport {
     background-color: #360c37;
     height: 100%;
-    overflow: hidden;
+    overflow: visible;
     position: relative;
     width: 100%;
+    margin: 0 0 0 -180px;
 }
 .sidebar {
     position: absolute;
@@ -46,24 +47,26 @@ body {
 .board {
     /* max visible area is 4000 x 4000 */
     cursor: move;
-    width: 3000px;
-    height: 2000px;
+    width: 5100px;
+    height: 3400px;
     position: relative;
     top: -50%;
     left: -25%;
-    background: url(img/square-bg.png) repeat;
+    background: url(img/background-bg-fill.png) repeat;
 }
 
 .square {
     position: absolute;
-    height: 50px;
-    width: 50px;
+    height: 85px;
+    width: 85px;
     display: inline-block;
+    background-repeat: no-repeat;
+    background-position: -8px -8px;
+    background-size: 127px 127px;
 }
-.square.center {
-    background: red;
+.board .square {
+    background-size: 100px 100px;
 }
-
 .square > div {
     height: 50px;
     width: 50px;
@@ -117,8 +120,12 @@ body {
     bottom: 95px;
     left: 40px;
     border: 1px solid #777;
-    background: url(img/tile03.png) no-repeat -8px -8px;
 }
+#in-play-tile .square {
+    width: 110px;
+    height: 110px;
+}
+
 /* end Sidebar features */
 
 /* Bottombar features */
@@ -207,3 +214,15 @@ body {
     background-color: #1dcd1d;
 }
 /* end Bottombar features */
+
+
+.square.tile01 { background-image: url(img/tile01.png)}
+.square.tile02 { background-image: url(img/tile02.png)}
+.square.tile03 { background-image: url(img/tile03.png)}
+.square.tile04 { background-image: url(img/tile04.png)}
+.square.tile05 { background-image: url(img/tile05.png)}
+.square.tile06 { background-image: url(img/tile06.png)}
+.square.tile07 { background-image: url(img/tile07.png)}
+.square.tile08 { background-image: url(img/tile08.png)}
+.square.tile09 { background-image: url(img/tile09.png)}
+.square.tile10 { background-image: url(img/tile10.png)}
